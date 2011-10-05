@@ -1,56 +1,28 @@
-$default-radius: 5px;
+@mixin border-radius($a: false, $b: false, $c: false, $d: false, $top-left: 0, $top-right: 0, $bottom-right: 0, $bottom-left: 0, $top: false, $bottom: false, $right: false, $left: false, $radius: false) {
 
-@mixin border-radius($radius: $default-radius) {
+  // Handle shorthand notation like CSS3 would
+  // You shouldn't explictly set these variables when calling the mixin
+  @if $d { $radius: $a $b $c $d; }
+  @else if $c { $radius: $a $b $c; }
+  @else if $b { $radius: $a $b; }
+  @else if $a { $radius: $a; }
+
+  @else {
+
+    // Target individual corners (or groups) instead of using CSS3 shorthand
+    @if $top { $top-left: $top; $top-right: $top; }
+    @if $bottom { $bottom-right: $bottom; $bottom-left: $bottom; }
+    @if $left { $top-left: $left; $bottom-left: $left; }
+    @if $right { $top-right: $right; $bottom-right: $right; }
+
+    // Set the radius
+    $radius: $top-left $top-right $bottom-right $bottom-left;
+  }
+
+  // Webkit, Mozilla, KHTML and standard CSS3
   -webkit-border-radius: $radius;
   -moz-border-radius: $radius;
   -khtml-border-radius: $radius;
   border-radius: $radius; 
-}
 
-@mixin border-top-radius($radius: $default-radius) {
-  @include border-top-left-radius($radius);
-  @include border-top-right-radius($radius);
-}
-
-@mixin border-bottom-radius($radius: $default-radius) {
-  @include border-bottom-left-radius($radius);
-  @include border-bottom-right-radius($radius);
-}
-
-@mixin border-left-radius($radius: $default-radius) {
-  @include border-top-left-radius($radius);
-  @include border-bottom-left-radius($radius);
-}
-
-@mixin border-right-radius($radius: $default-radius) {
-  @include border-top-right-radius($radius);
-  @include border-bottom-right-radius($radius);
-}
-
-@mixin border-top-left-radius($radius: $default-radius) {
-  -webkit-border-top-left-radius: $radius;
-  -moz-border-radius-topleft: $radius;
-  -khtml-border-top-left-radius: $radius;
-  border-top-left-radius: $radius; 
-}
-
-@mixin border-top-right-radius($radius: $default-radius) {
-  -webkit-border-top-right-radius: $radius;
-  -moz-border-radius-topright: $radius;
-  -khtml-border-top-right-radius: $radius;
-  border-top-right-radius: $radius; 
-}
-
-@mixin border-bottom-left-radius($radius: $default-radius) {
-  -webkit-border-bottom-left-radius: $radius;
-  -moz-border-radius-bottomleft: $radius;
-  -khtml-border-bottom-left-radius: $radius;
-  border-bottom-left-radius: $radius; 
-}
-
-@mixin border-bottom-right-radius($radius: $default-radius) {
-  -webkit-border-bottom-right-radius: $radius;
-  -moz-border-radius-bottomright: $radius;
-  -khtml-border-bottom-right-radius: $radius;
-  border-bottom-right-radius: $radius; 
 }
